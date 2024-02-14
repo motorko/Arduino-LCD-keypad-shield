@@ -31,19 +31,30 @@ void handleButtons() {
   }
 }
 
-void setup() { lcd.begin(16, 2); }
+void printDot() {
+  lcd.createChar(DOT_LOCATION, dot.getDotChar());
+  lcd.setCursor(dot.cursorCoords.x, dot.cursorCoords.y);
+  lcd.write(DOT_LOCATION);
+}
+
+void clearPrevCeil() {
+  lcd.setCursor(dot.prevCursorCoords.x, dot.prevCursorCoords.y);
+  lcd.write(' ');
+}
+
+void setup() {
+  lcd.begin(16, 2);
+  printDot();
+}
 
 void loop() {
   handleButtons();
 
   if (dot.isCursorChanged()) {
-    lcd.setCursor(dot.prevCursorCoords.x, dot.prevCursorCoords.y);
-    lcd.write(' ');
+    clearPrevCeil();
   }
 
   if (dot.isDotChanged()) {
-    lcd.createChar(DOT_LOCATION, dot.getDotChar());
-    lcd.setCursor(dot.cursorCoords.x, dot.cursorCoords.y);
-    lcd.write(DOT_LOCATION);
+    printDot();
   }
 }
