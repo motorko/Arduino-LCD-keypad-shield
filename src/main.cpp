@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 #include <Wire.h>
+#include <Buttons.h>
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
@@ -8,23 +9,6 @@ const uint8_t dot = 0;
 
 uint8_t dot_char[] = {B10000, B00000, B00000, B00000,
                       B00000, B00000, B00000, B00000};
-
-enum Button { RIGHT, UP, DOWN, LEFT, SELECT, NONE };
-
-Button getButton() {
-  static uint64_t last_time = 0;
-  if ((millis() - last_time) < 50) return NONE;
-  last_time = millis();
-
-  uint16_t val = analogRead(0);
-
-  if (val < 50) return RIGHT;
-  if (val < 200) return UP;
-  if (val < 400) return DOWN;
-  if (val < 600) return LEFT;
-  if (val < 900) return SELECT;
-  return NONE;
-}
 
 struct dot_coords_t {
   uint8_t x;
@@ -74,22 +58,22 @@ void loop() {
   static struct dot_coords_t dot_coords;
   static struct dot_coords_t old_dot_coords;
 
-  switch (getButton()) {
-    case Button::RIGHT:
+  switch (getPressedButton()) {
+    case Buttons::RIGHT:
       dot_coords.change(dot_coords.x + 1, dot_coords.y);
       break;
-    case Button::UP:
+    case Buttons::UP:
       dot_coords.change(dot_coords.x, dot_coords.y - 1);
       break;
-    case Button::DOWN:
+    case Buttons::DOWN:
       dot_coords.change(dot_coords.x, dot_coords.y + 1);
       break;
-    case Button::LEFT:
+    case Buttons::LEFT:
       dot_coords.change(dot_coords.x - 1, dot_coords.y);
       break;
-    case Button::SELECT:
+    case Buttons::SELECT:
       break;
-    case Button::NONE:
+    case Buttons::NONE:
       break;
   }
 
