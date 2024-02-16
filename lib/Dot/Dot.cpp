@@ -1,22 +1,16 @@
 #include <Dot.h>
 
-void Dot::goTop() {
-  coords.y = (coords.y <= 0) ? 0 : coords.y - 1;
-  onChange();
-}
+void Dot::goTop() { setCoords(coords.x, coords.y - 1); }
 
-void Dot::goBottom() {
-  coords.y = (coords.y >= MAX_Y) ? MAX_Y : coords.y + 1;
-  onChange();
-}
+void Dot::goBottom() { setCoords(coords.x, coords.y + 1); }
 
-void Dot::goLeft() {
-  coords.x = (coords.x <= 0) ? 0 : coords.x - 1;
-  onChange();
-}
+void Dot::goLeft() { setCoords(coords.x - 1, coords.y); }
 
-void Dot::goRight() {
-  coords.x = (coords.x >= MAX_X) ? MAX_X : coords.x + 1;
+void Dot::goRight() { setCoords(coords.x + 1, coords.y); }
+
+void Dot::setCoords(uint8_t x, uint8_t y) {
+  coords.x = x == UINT8_MAX ? 0 : x > MAX_X ? MAX_X : x;
+  coords.y = y == UINT8_MAX ? 0 : y > MAX_Y ? MAX_Y : y;
   onChange();
 }
 

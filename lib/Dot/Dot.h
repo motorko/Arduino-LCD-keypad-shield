@@ -21,6 +21,8 @@ class Dot {
   void goLeft();
   void goRight();
 
+  void setCoords(uint8_t x, uint8_t y);
+
   bool isCursorChanged();
   bool isDotChanged();
 
