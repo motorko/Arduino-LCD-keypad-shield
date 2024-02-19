@@ -15,6 +15,7 @@ class Dot {
  public:
   dot_coords_t prevCursorCoords = {0, 0};
   dot_coords_t cursorCoords = {0, 0};
+  dot_coords_t coords = {0, 0};
 
   void goTop();
   void goBottom();
@@ -31,8 +32,6 @@ class Dot {
  private:
   uint8_t dotChar[8] = {B10000, 0, 0, 0, 0, 0, 0, 0};
   uint8_t dotXs[5] = {B10000, B01000, B00100, B00010, B00001};
-
-  dot_coords_t coords = {0, 0};
 
   dot_coords_t dotCoords = {0, 0};
   dot_coords_t prevDotCoords = {0, 0};
