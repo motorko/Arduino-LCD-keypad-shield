@@ -9,7 +9,7 @@ CoordVector::CoordVector(float initialX, float initialY, float initialSpeed,
   MAX_Y = maxY + 1;
 }
 
-void CoordVector::step() {
+void CoordVector::tick() {
   static uint64_t lastTime = millis();
   if (millis() - lastTime < (1000 / FPS)) return;
   lastTime = millis();

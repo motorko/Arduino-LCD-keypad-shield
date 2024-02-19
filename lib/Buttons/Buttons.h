@@ -2,6 +2,15 @@
 
 #define BTN_THROTTLE 100
 
-enum Buttons { RIGHT = 1, UP = 2, DOWN = 3, LEFT = 4, SELECT = 0, NONE = -1 };
+typedef void (*callback)();
 
-Buttons getPressedButton();
+class Buttons {
+ public:
+  enum State { RIGHT, UP, DOWN, LEFT, SELECT, NONE };
+  void bindToClick(State state, callback cb);
+  void tick();
+
+ private:
+  State getState();
+  callback callbacks[5] = {nullptr, nullptr, nullptr, nullptr, nullptr};
+};

@@ -14,7 +14,7 @@ class CoordVector {
   float x;
   float y;
 
-  void step();
+  void tick();
 
  private:
   uint8_t MAX_X;

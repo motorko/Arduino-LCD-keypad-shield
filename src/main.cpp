@@ -10,27 +10,24 @@
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 Dot dot;
 CoordVector cv((float)dot.coords.x, (float)dot.coords.y, 0, MAX_X, MAX_Y);
+Buttons btns;
 
-void handleButtons() {
-  switch (getPressedButton()) {
-    case Buttons::RIGHT:
-      cv.speedX += ACCELERATION;
-      break;
-    case Buttons::UP:
-      cv.speedY -= ACCELERATION;
-      break;
-    case Buttons::DOWN:
-      cv.speedY += ACCELERATION;
-      break;
-    case Buttons::LEFT:
-      cv.speedX -= ACCELERATION;
-      break;
-    case Buttons::SELECT:
-      cv.speedX = cv.speedY = 0;
-      break;
-    case Buttons::NONE:
-      break;
-  }
+void bindCallbacks() {
+  btns.bindToClick(Buttons::RIGHT, []() { cv.speedX += ACCELERATION; });
+  btns.bindToClick(Buttons::LEFT, []() { cv.speedX -= ACCELERATION; });
+  btns.bindToClick(Buttons::UP, []() { cv.speedY -= ACCELERATION; });
+  btns.bindToClick(Buttons::DOWN, []() { cv.speedY += ACCELERATION; });
+  btns.bindToClick(Buttons::SELECT, []() { cv.speedX = cv.speedY = 0; });
+}
+
+void ticks() {
+  btns.tick();
+  cv.tick();
+}
+
+void clearPrevCeil() {
+  lcd.setCursor(dot.prevCursorCoords.x, dot.prevCursorCoords.y);
+  lcd.write(' ');
 }
 
 void printDot() {
@@ -39,19 +36,14 @@ void printDot() {
   lcd.write(DOT_LOCATION);
 }
 
-void clearPrevCeil() {
-  lcd.setCursor(dot.prevCursorCoords.x, dot.prevCursorCoords.y);
-  lcd.write(' ');
-}
-
 void setup() {
   lcd.begin(16, 2);
+  bindCallbacks();
   printDot();
 }
 
 void loop() {
-  cv.step();
-  handleButtons();
+  ticks();
 
   dot.setCoords(cv.x, cv.y);
 

@@ -1,9 +1,9 @@
 #include <Buttons.h>
 
-Buttons getPressedButton() {
-  static uint64_t last_time = 0;
-  if ((millis() - last_time) < BTN_THROTTLE) return NONE;
-  last_time = millis();
+Buttons::State Buttons::getState() {
+  static uint64_t lastTime = 0;
+  if ((millis() - lastTime) < BTN_THROTTLE) return NONE;
+  lastTime = millis();
 
   uint16_t val = analogRead(0);
 
@@ -13,4 +13,11 @@ Buttons getPressedButton() {
   if (val < 600) return LEFT;
   if (val < 900) return SELECT;
   return NONE;
+}
+
+void Buttons::bindToClick(State state, callback cb) { callbacks[state] = cb; }
+
+void Buttons::tick() {
+  State state = Buttons::getState();
+  if (state != NONE && callbacks[state] != nullptr) callbacks[state]();
 }
