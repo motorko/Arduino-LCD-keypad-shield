@@ -45,7 +45,6 @@ void clearPrevCeil() {
 }
 
 void setup() {
-  Wire.begin();
   lcd.begin(16, 2);
   printDot();
 }
