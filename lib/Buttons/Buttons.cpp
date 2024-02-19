@@ -2,7 +2,7 @@
 
 Buttons getPressedButton() {
   static uint64_t last_time = 0;
-  if ((millis() - last_time) < BTN_RATTLE) return NONE;
+  if ((millis() - last_time) < BTN_THROTTLE) return NONE;
   last_time = millis();
 
   uint16_t val = analogRead(0);
