@@ -1,30 +1,32 @@
 #include <Arduino.h>
 #include <Buttons.h>
+#include <CoordVector.h>
 #include <Dot.h>
 #include <LiquidCrystal.h>
 #include <Wire.h>
 
+#define DOT_LOCATION (uint8_t)0
+
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
-
 Dot dot;
-
-const uint8_t DOT_LOCATION = 0;
+CoordVector cv((float)dot.coords.x, (float)dot.coords.y, 0, MAX_X, MAX_Y);
 
 void handleButtons() {
   switch (getPressedButton()) {
     case Buttons::RIGHT:
-      dot.goRight();
+      cv.speedX += ACCELERATION;
       break;
     case Buttons::UP:
-      dot.goTop();
+      cv.speedY -= ACCELERATION;
       break;
     case Buttons::DOWN:
-      dot.goBottom();
+      cv.speedY += ACCELERATION;
       break;
     case Buttons::LEFT:
-      dot.goLeft();
+      cv.speedX -= ACCELERATION;
       break;
     case Buttons::SELECT:
+      cv.speedX = cv.speedY = 0;
       break;
     case Buttons::NONE:
       break;
@@ -43,12 +45,16 @@ void clearPrevCeil() {
 }
 
 void setup() {
+  Wire.begin();
   lcd.begin(16, 2);
   printDot();
 }
 
 void loop() {
+  cv.step();
   handleButtons();
+
+  dot.setCoords(cv.x, cv.y);
 
   if (dot.isCursorChanged()) {
     clearPrevCeil();
