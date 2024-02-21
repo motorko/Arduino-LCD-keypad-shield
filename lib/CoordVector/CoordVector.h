@@ -19,4 +19,6 @@ class CoordVector {
  private:
   uint8_t MAX_X;
   uint8_t MAX_Y;
+
+  uint64_t lastTime = 0;
 };

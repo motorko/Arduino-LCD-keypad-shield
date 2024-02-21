@@ -10,7 +10,6 @@ CoordVector::CoordVector(float initialX, float initialY, float initialSpeed,
 }
 
 void CoordVector::tick() {
-  static uint64_t lastTime = millis();
   if (millis() - lastTime < (1000 / FPS)) return;
   lastTime = millis();
 
