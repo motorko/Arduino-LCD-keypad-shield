@@ -18,14 +18,14 @@ void CoordVector::tick() {
 
   if (newX > MAX_X || newX < 0) {
     speedX *= -BOUNCE;
-    newX = newX >= MAX_X ? MAX_X - 1 : 0;
+    newX = newX >= MAX_X ? MAX_X : 0;
   } else {
     speedX *= FRICTION;
   }
 
   if (newY > MAX_Y || newY < 0) {
     speedY *= -BOUNCE;
-    newY = newY >= MAX_Y ? MAX_Y - 1 : 0;
+    newY = newY >= MAX_Y ? MAX_Y : 0;
   } else {
     speedY *= FRICTION;
   }
