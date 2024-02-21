@@ -1,5 +1,10 @@
 #include <Dot.h>
 
+Dot::Dot(uint8_t initialX, uint8_t initialY) {
+  setCoords(initialX, initialY);
+  onChange();
+}
+
 void Dot::goTop() { setCoords(coords.x, coords.y - 1); }
 
 void Dot::goBottom() { setCoords(coords.x, coords.y + 1); }

@@ -8,7 +8,7 @@
 #define DOT_LOCATION (uint8_t)0
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
-Dot dot;
+Dot dot(0, 0);
 CoordVector cv((float)dot.coords.x, (float)dot.coords.y, 0, MAX_X, MAX_Y);
 Buttons btns;
 

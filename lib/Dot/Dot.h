@@ -13,6 +13,7 @@ typedef struct {
 
 class Dot {
  public:
+  Dot(uint8_t initialX, uint8_t initialY);
   dot_coords_t prevCursorCoords = {0, 0};
   dot_coords_t cursorCoords = {0, 0};
   dot_coords_t coords = {0, 0};
