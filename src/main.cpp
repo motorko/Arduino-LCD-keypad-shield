@@ -12,7 +12,7 @@ Dot dot(0, 0);
 CoordVector cv((float)dot.coords.x, (float)dot.coords.y, 0, MAX_X, MAX_Y);
 Buttons btns;
 
-void bindCallbacks() {
+void bindBtnsCallbacks() {
   btns.bindToClick(Buttons::RIGHT, []() { cv.speedX += ACCELERATION; });
   btns.bindToClick(Buttons::LEFT, []() { cv.speedX -= ACCELERATION; });
   btns.bindToClick(Buttons::UP, []() { cv.speedY -= ACCELERATION; });
@@ -38,7 +38,7 @@ void printDot() {
 
 void setup() {
   lcd.begin(16, 2);
-  bindCallbacks();
+  bindBtnsCallbacks();
   printDot();
 }
 
